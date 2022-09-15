@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Photos from a Array </h1>
+
+    <div id="demo"></div>
+
+    <button onclick="myfun()">Change</button>
+
+    <script>
+      function myfun() {
+        var req = new XMLHttpRequest();
+        req.open("GET", "data.json", true);
+        req.send();
+
+        req.onreadystatechange = function () {
+          if (req.readyState == 4 && req.status == 200) {
+            var jsonObj = JSON.parse(req.responseText);
+            console.log(jsonObj);
+            var pro = jsonObj.products;
+
+            console.log(pro);
+
+            function getFields(input, field) {
+              var output = [];
+              for (var i = 0; i < input.length; ++i)
+                output.push(input[i][field]);
+              return output;
+            }
+
+            var result = getFields(pro, "thumbnail");
+            console.log(result);
+       
+          for(var b=0; b< result.length; b++){
+            var image=new Image();
+            image.src = result[b];
+            document.getElementById("demo").appendChild(image);}
+    
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
